@@ -86,7 +86,6 @@ class ACO(object):
         
         return solChild
 
-
     def find_fittest(self, graph):
         """
         graph : Graph of Nodes
@@ -145,8 +144,8 @@ class ACO(object):
                     if ant.totalCost < bestCost:
                         bestCost = ant.totalCost
                         bestSolution = ant.tabu
-                    
-                    ant.update_pheromone_delta() # Update pheromoneDelta of ants
+                        ant.update_pheromone_delta() # Update pheromoneDelta of ants
+                        print('hey')
             
             else:   
 

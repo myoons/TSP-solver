@@ -48,7 +48,7 @@ def main():
     
     costMatrix = [[distance(nodes[i], nodes[j]) for j in range(nodeSize)] for i in range(nodeSize)] # Cost Matrix = 1/Distance
 
-    aco = ACO(antSize, generations, 1.0, 8.0, 0.4817, 10, 5, 0.05)
+    aco = ACO(antSize, generations, 1.0, 10.0, 0.4817, 100, 5, 0.05)
     graph = Graph(costMatrix, nodeSize)
     path, cost = aco.find_fittest(graph)
 
@@ -59,13 +59,11 @@ def main():
     print(cost)
     print(finish-start)
 
-    resultList.append((cost,finish-start))
-
     # Write solution in csv file
     f = open('solution'+'_'+fileName.split('.')[0]+'.csv','w',newline='')
     wr = csv.writer(f)
     for node in path:
-        wr.writerow([node])
+        wr.writerow([node+1])
 
 if __name__ == '__main__':
 
@@ -75,11 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', required=True, help="Number of Ants")
     parser.add_argument('-g', required=True, help='Number of Generations')
     
-    resultList = []
-
-    for i in range(10):
+    for i in range(50):
         main()
-    
-    print(resultList)
         
 

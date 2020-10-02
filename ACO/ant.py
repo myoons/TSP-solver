@@ -13,7 +13,7 @@ class Ant(object):
         self.tabu = [] # List of nodes in sequence of exploration
         self.pheromoneDelta = [] # Local increase of pheromone
         self.allowed = [i for i in range(graph.nodeSize)] # Allowed nodes that ant can explore
-        self.eta = [[0 if i==j else 1 / graph.costMatrix[i][j] for j in range(graph.nodeSize)] for i in range(graph.nodeSize)] # Heuristic Information
+        self.eta = [[0 if i==j else 1 / (graph.costMatrix[i][j] ** 2) for j in range(graph.nodeSize)] for i in range(graph.nodeSize)] # Heuristic Information
 
         start = random.randint(0, graph.nodeSize - 1) # Start from random node for each ant
 
