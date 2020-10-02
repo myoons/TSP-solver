@@ -98,40 +98,41 @@ class ACO(object):
         for gen in range(self.generations):
             
             if (gen%2):
-                print("Anti")
+
                 sol1 = self.tournamentSelection(costSol)
                 sol2 = self.tournamentSelection(costSol)
                 sol3 = self.tournamentSelection(costSol)
                 sol4 = self.tournamentSelection(costSol)
 
                 ants = []
+                perSize = int(self.antSize/6)
 
-                for i in range(3):
+                for i in range(perSize):
                     child = self.crossover(sol1, sol2)
                     self.mutation(child)
                     ants.append(Anti(self, graph, child))
                 
-                for i in range(3):
+                for i in range(perSize):
                     child = self.crossover(sol1, sol3)
                     self.mutation(child)
                     ants.append(Anti(self, graph, child))
 
-                for i in range(3):
+                for i in range(perSize):
                     child =  self.crossover(sol1, sol4)
                     self.mutation(child)
                     ants.append(Anti(self, graph, child))
                 
-                for i in range(3):
+                for i in range(perSize):
                     child = self.crossover(sol2, sol3)
                     self.mutation(child)
                     ants.append(Anti(self, graph, child))
                 
-                for i in range(3):
+                for i in range(perSize):
                     child = self.crossover(sol2, sol4)
                     self.mutation(child)
                     ants.append(Anti(self, graph, child))
 
-                for i in range(3):
+                for i in range(perSize):
                     child =  self.crossover(sol3, sol4)
                     self.mutation(child)
                     ants.append(Anti(self, graph, child))
@@ -148,7 +149,7 @@ class ACO(object):
                     ant.update_pheromone_delta() # Update pheromoneDelta of ants
             
             else:   
-                print('Ant')
+
                 ants = [Ant(self, graph) for i in range(self.antSize)] # Generate ants for each generation
 
                 for ant in ants:

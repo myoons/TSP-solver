@@ -1,18 +1,32 @@
 import math, random
 import datetime
+import csv
+import argparse
 
 from ACO.node import Node, distance
 from ACO.graph import Graph
 from ACO.aco import ACO
-from ACO.ant import Ant, Anti
+
+######################################################################
+# Options
+######################################################################
+
+
+################################
 
 def main():
+
+    args = parser.parse_args()
+
+    fileName = args.f
+    antSize = int(args.p)
+    generations = int(args.g)
 
     # Record the start time
     start = datetime.datetime.now()
 
     # Open the tsp File
-    tspFile = open('./tspFiles/test.tsp', 'r')
+    tspFile = open('./tspFiles/'+fileName, 'r')
 
     # Read Header
     Name = tspFile.readline().strip().split(':')[1] # Name
@@ -34,15 +48,38 @@ def main():
     
     costMatrix = [[distance(nodes[i], nodes[j]) for j in range(nodeSize)] for i in range(nodeSize)] # Cost Matrix = 1/Distance
 
-    aco = ACO(18, 10, 1.0, 5.0, 0.4817, 10, 5, 0.05)
+    aco = ACO(antSize, generations, 1.0, 8.0, 0.4817, 10, 5, 0.05)
     graph = Graph(costMatrix, nodeSize)
     path, cost = aco.find_fittest(graph)
 
     # Record Finish Time
     finish = datetime.datetime.now()
+    
+    # Print the best Cost (total length)
+    print(cost)
+    print(finish-start)
 
-    print('Final Distance :', cost)
-    print("Executed Time :", finish-start)
+    resultList.append((cost,finish-start))
+
+    # Write solution in csv file
+    f = open('solution'+'_'+fileName.split('.')[0]+'.csv','w',newline='')
+    wr = csv.writer(f)
+    for node in path:
+        wr.writerow([node])
 
 if __name__ == '__main__':
-    main()
+
+    parser = argparse.ArgumentParser()
+    
+    parser.add_argument('-f', required=True, help="File Name (TSP)")
+    parser.add_argument('-p', required=True, help="Number of Ants")
+    parser.add_argument('-g', required=True, help='Number of Generations')
+    
+    resultList = []
+
+    for i in range(10):
+        main()
+    
+    print(resultList)
+        
+
