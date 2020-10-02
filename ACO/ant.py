@@ -2,7 +2,7 @@ import random
 
 class Ant(object):
     
-    def __init__(self, aco, graph, tabu=None):
+    def __init__(self, aco, graph):
         """
         aco : ACO
         graph : Graph of Nodes
@@ -10,7 +10,7 @@ class Ant(object):
         self.aco = aco
         self.graph = graph
         self.totalCost = 0 # Total Cost of each ant
-        self.tabu = [] if tabu==None else tabu
+        self.tabu = [] # List of nodes in sequence of exploration
         self.pheromoneDelta = [] # Local increase of pheromone
         self.allowed = [i for i in range(graph.nodeSize)] # Allowed nodes that ant can explore
         self.eta = [[0 if i==j else 1 / graph.costMatrix[i][j] for j in range(graph.nodeSize)] for i in range(graph.nodeSize)] # Heuristic Information
@@ -58,3 +58,37 @@ class Ant(object):
             j = self.tabu[exploredNode]
 
             self.pheromoneDelta[i][j] = self.aco.Q / self.graph.costMatrix[i][j] # Delta for Node i -> Node j
+
+class Anti(object):
+
+    def __init__(self, aco, graph, tabu):
+        """
+        aco : ACO
+        graph : Graph of Nodes
+        """
+        self.aco = aco
+        self.graph = graph
+        self.tabu = tabu
+        self.totalCost = 0 # Total Cost of each ant
+        self.pheromoneDelta = [] # Local increase of pheromone
+        self.eta = [[0 if i==j else 1 / graph.costMatrix[i][j] for j in range(graph.nodeSize)] for i in range(graph.nodeSize)] # Heuristic Information
+    
+    def total_cost(self):
+        for i in range(len(self.tabu)-1):
+            self.totalCost += self.graph.costMatrix[self.tabu[i]][self.tabu[i+1]]
+
+    def update_pheromone_delta(self):
+        
+        self.pheromoneDelta = [[0 for j in range(self.graph.nodeSize)] for i in range(self.graph.nodeSize)] # Initialize pheromoneDelta
+        
+        for exploredNode in range(1, len(self.tabu)):
+
+            i = self.tabu[exploredNode - 1]
+            j = self.tabu[exploredNode]
+
+            self.pheromoneDelta[i][j] = self.aco.Q / self.graph.costMatrix[i][j] # Delta for Node i -> Node j
+
+
+                
+
+                

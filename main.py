@@ -4,7 +4,7 @@ import datetime
 from ACO.node import Node, distance
 from ACO.graph import Graph
 from ACO.aco import ACO
-from ACO.ant import Ant
+from ACO.ant import Ant, Anti
 
 def main():
 
@@ -12,7 +12,7 @@ def main():
     start = datetime.datetime.now()
 
     # Open the tsp File
-    tspFile = open('./tspFiles/a280.tsp', 'r')
+    tspFile = open('./tspFiles/test.tsp', 'r')
 
     # Read Header
     Name = tspFile.readline().strip().split(':')[1] # Name
@@ -34,7 +34,7 @@ def main():
     
     costMatrix = [[distance(nodes[i], nodes[j]) for j in range(nodeSize)] for i in range(nodeSize)] # Cost Matrix = 1/Distance
 
-    aco = ACO(18, 100, 1.0, 5.0, 0.4817, 10)
+    aco = ACO(18, 10, 1.0, 5.0, 0.4817, 10, 5, 0.05)
     graph = Graph(costMatrix, nodeSize)
     path, cost = aco.find_fittest(graph)
 
@@ -43,6 +43,6 @@ def main():
 
     print('Final Distance :', cost)
     print("Executed Time :", finish-start)
-    
+
 if __name__ == '__main__':
     main()
