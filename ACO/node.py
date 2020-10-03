@@ -15,6 +15,6 @@ class Node:
 
 # Distance between two Nodes
 def distance(node1, node2):
-        xDistance = abs(node1.getX() - node2.getX())
-        yDistance = abs(node1.getY() - node2.getY())
-        return math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
+    xDistance = abs(node1.getX() - node2.getX())
+    yDistance = abs(node1.getY() - node2.getY())
+    return math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
