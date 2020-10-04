@@ -20,6 +20,7 @@ class ACO(object):
         self.rho = rho
         self.Q = q
 
+
     def update_pheromone(self, graph, ants):
         """
         graph : Graph of Nodes
@@ -55,8 +56,6 @@ class ACO(object):
             j = optim[node]
                     
             graph.pheromone[i][j] *= (1/self.rho)
-
-
 
     def find_fittest(self, graph):
         """

@@ -48,7 +48,7 @@ def main():
     
     costMatrix = [[distance(nodes[i], nodes[j]) for j in range(nodeSize)] for i in range(nodeSize)] # Cost Matrix = 1/Distance
 
-    aco = ACO(antSize, generations, 1.0, 8.0, 0.4817, 100)
+    aco = ACO(antSize, generations, 1.0, 8.0, 0.4817, 10)
     graph = Graph(costMatrix, nodeSize)
     path, cost = aco.find_fittest(graph)
 

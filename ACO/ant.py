@@ -21,6 +21,26 @@ class Ant(object):
         self.current = start # Current node of the ant
         self.allowed.remove(start)
     
+    # Bad
+    def tournamentSelection(self, probList):
+        """
+        probList : List of probabilities
+        """
+        nonZeroList = []
+        tempList = []
+
+        for prob in probList:    
+            if prob != 0 :
+                nonZeroList.append(probList.index(prob))
+        
+        for i in range(16):
+            randomId = int(random.random() * len(nonZeroList))
+            tempList.append(nonZeroList[randomId])
+        
+        sortedList = sorted(tempList)
+
+        return sortedList[0]
+
     def select_next(self, eta):
         
         denominator = 0 # Denominator of the possibility
@@ -41,15 +61,17 @@ class Ant(object):
         randOpt = random.random()
 
         # Threshold = 0.9 (Improved Version)
-        if randOpt < 0.7 :
+        if randOpt < 0.9 :
             selected = probabilities.index(max(probabilities))
-        else : 
+        else :
+            
             for i, probability in enumerate(probabilities):
                 
                 rand -= probability
                 if rand <= 0 : # i node is selected to explore
                     selected = i
                     break
+ 
 
         self.allowed.remove(selected) # Remove the selected node (next node to explore) from allowed
         self.tabu.append(selected)
