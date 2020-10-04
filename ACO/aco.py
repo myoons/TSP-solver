@@ -168,10 +168,10 @@ class ACO(object):
 
                 ant.update_pheromone_delta() # Update pheromoneDelta of each ant
 
-                if fitNum == self.maxFit: # Break the for loop when number if fitness function reached the limit
+                if fitNum > self.maxFit: # Break the for loop when number if fitness function reached the limit
                     break
             
-            if fitNum == self.maxFit: # Break the for loop when number if fitness function reached the limit
+            if fitNum > self.maxFit: # Break the for loop when number if fitness function reached the limit
                     break
 
             self.update_pheromone(graph, ants) # Update pheromone in the graph after one generation based on pheromone delta inforamtion of ants
