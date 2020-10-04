@@ -7,20 +7,14 @@ from ACO.node import Node, distance
 from ACO.graph import Graph
 from ACO.aco import ACO
 
-######################################################################
-# Options
-######################################################################
-
-
-################################
-
 def main():
 
     args = parser.parse_args()
 
-    fileName = args.f
+    fileName = args.t
     antSize = int(args.p)
     generations = int(args.g)
+    maxFit = int(args.f)
 
     # Record the start time
     start = datetime.datetime.now()
@@ -39,8 +33,8 @@ def main():
     tspFile.readline()
 
     nodeSize = int(Dimension)
-    nodes = []
-    costMatrix = []
+    nodes = [] # List of nodes
+    costMatrix = [] # N*N matrix of cost
 
     for i in range(nodeSize) :
         index, x, y = tspFile.readline().strip().split()
@@ -48,9 +42,9 @@ def main():
     
     costMatrix = [[distance(nodes[i], nodes[j]) for j in range(nodeSize)] for i in range(nodeSize)] # Cost Matrix = 1/Distance
 
-    aco = ACO(antSize, generations, 1.0, 8.0, 0.4817, 10)
-    graph = Graph(costMatrix, nodeSize)
-    path, cost = aco.find_fittest(graph)
+    aco = ACO(antSize, generations, maxFit, 1.0, 8.0, 0.5, 10, 5) # Main Structure
+    graph = Graph(costMatrix, nodeSize) # Graph of the nodes
+    path, cost = aco.find_fittest(graph) # Solve TSP problem
 
     # Record Finish Time
     finish = datetime.datetime.now()
@@ -58,7 +52,7 @@ def main():
     # Print the best Cost (total length)
     print(cost)
     print(finish-start)
-    
+
     # Write solution in csv file
     f = open('solution'+'_'+fileName.split('.')[0]+'.csv','w',newline='')
     wr = csv.writer(f)
@@ -69,9 +63,10 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('-f', required=True, help="File Name (TSP)")
+    parser.add_argument('-t', required=True, help="File Name (TSP)")
     parser.add_argument('-p', required=True, help="Number of Ants")
     parser.add_argument('-g', required=True, help='Number of Generations')
+    parser.add_argument('-f', required=True, help='Max Number of Fitness Function')
     
     main()
     

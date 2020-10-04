@@ -1,9 +1,12 @@
 import math
 
-# Class Node (City)
 class Node:
     
     def __init__(self, x, y):
+        """
+        x : x coordinate of the node
+        y : y coordinate of the node
+        """
         self.x = x
         self.y = y
     
@@ -13,8 +16,10 @@ class Node:
     def getY(self):
         return self.y
 
-# Distance between two Nodes
 def distance(node1, node2):
+    """
+    Calculating distance between two Nodes
+    """
     xDistance = abs(node1.getX() - node2.getX())
     yDistance = abs(node1.getY() - node2.getY())
     return math.sqrt((xDistance*xDistance) + (yDistance*yDistance))
